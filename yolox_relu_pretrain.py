@@ -17,7 +17,7 @@ class Exp(MyExp):
         self.depth = 1.0
         self.width = 1.0
         self.num_classes = 80
-        self.max_epoch = 180
+        self.max_epoch = 200
         self.data_num_workers = 1
         self.input_size = (640, 640)
         self.random_size = (10, 20)
