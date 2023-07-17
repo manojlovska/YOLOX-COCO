@@ -24,12 +24,13 @@ class Exp(MyExp):
         self.mosaic_scale = (0.5, 1.5)
         self.test_size = (640, 640)
         self.mosaic_prob = 0.5
-        self.enable_mixup = False
+        self.enable_mixup = True
         self.eval_interval = 10
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.data_dir = 'COCO'
         # modify 'silu' to 'relu' for deployment on DPU
         self.act = 'relu'
+        self.basic_lr_per_img = 0.001 / 64.0
 
         self.thresh_lr_scale = 10
 

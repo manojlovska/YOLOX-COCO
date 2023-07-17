@@ -4,4 +4,4 @@ GPU_NUM=2
 BATCH=16
 
 CFG=yolox_relu_pretrain.py
-python -m yolox.tools.train -f ${CFG} -d ${GPU_NUM} -b ${BATCH} -o --fp16
+python -m yolox.tools.train -f ${CFG} -d ${GPU_NUM} -b ${BATCH} -o --fp16 --logger wandb wandb-project "YOLOX-pretrain"
