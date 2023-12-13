@@ -1,0 +1,21 @@
+depth: 1.0
+width: 1.0
+num_classes: 80
+max_epoch: 200
+data_num_workers: 1
+'input_size ': &id001
+- 640
+- 640
+random_size:
+- 10
+- 20
+mosaic_scale:
+- 0.5
+- 1.5
+test_size: *id001
+mosaic_prob: 0.5
+enable_mixup: true
+eval_interval: 5
+basic_lr_per_img: 1.5625e-06
+thresh_lr_scale: 10
+activation_function: relu

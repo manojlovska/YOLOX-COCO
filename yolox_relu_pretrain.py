@@ -10,6 +10,9 @@ from loguru import logger
 
 from yolox.exp import Exp as MyExp
 
+from dvclive import Live
+
+
 
 class Exp(MyExp):
     def __init__(self):
@@ -25,12 +28,12 @@ class Exp(MyExp):
         self.test_size = (640, 640)
         self.mosaic_prob = 0.5
         self.enable_mixup = True
-        self.eval_interval = 10
+        self.eval_interval = 5 # Changed to 5 epochs, to see which experiment converges fastest
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
         self.data_dir = 'COCO'
         # modify 'silu' to 'relu' for deployment on DPU
         self.act = 'relu'
-        self.basic_lr_per_img = 0.001 / 64.0
+        self.basic_lr_per_img = 0.0001 / 64.0
 
         self.thresh_lr_scale = 10
 
@@ -39,6 +42,25 @@ class Exp(MyExp):
         torch.backends.cudnn.enabled = False
 
         logger.info("GPU MEMORY AVAILABLE: " + str(torch.cuda.mem_get_info()))
+
+        # Tracking experiments with DVC
+        with Live(save_dvc_exp=True) as live:
+            live.log_param("depth", self.depth)
+            live.log_param("width", self.width)
+            live.log_param("num_classes", self.num_classes)
+            live.log_param("max_epoch", self.max_epoch)
+            live.log_param("data_num_workers", self.data_num_workers)
+            live.log_param("input_size ", self.input_size )
+            live.log_param("random_size", self.random_size)
+            live.log_param("mosaic_scale", self.mosaic_scale)
+            live.log_param("test_size", self.test_size)
+            live.log_param("mosaic_prob", self.mosaic_prob)
+            live.log_param("enable_mixup", self.enable_mixup)
+            live.log_param("eval_interval", self.eval_interval)
+            live.log_param("basic_lr_per_img", self.basic_lr_per_img)
+            live.log_param("thresh_lr_scale", self.thresh_lr_scale)
+            live.log_param("activation_function", self.act)
+
 
 
     def get_model(self, sublinear=False):
